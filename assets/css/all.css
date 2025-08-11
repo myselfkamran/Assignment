@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    margin:0;
+    padding: 0;
+    list-style: none;
+}
+body{
+    margin:0;
+    font: 16px/1.2 'Inter', sans-serif;
+    color:#484946;
+    background: #fff;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+}
+a{
+    text-decoration: none;
+    outline:none;
+    color:#757575;
+    transition:all .2s ease;
+    -webkit-transition:all .2s ease;
+    -moz-transition:all .2s ease;
+}
+input{outline:none;}
+.hidden{display:none;}
+button,
+input[type="submit"],
+input[type="reset"]{
+    cursor:pointer;
+}
+.flex{
+    display: flex;
+}
+.flex-center{
+    justify-content: center;
+}
+.flex-right{margin-left: auto;}
+.space-between{
+    justify-content: space-between;
+}
+.flex-middle{
+    align-items: center;
+}
+.flex-start{
+    align-items: flex-start;
+}
+.flex-column{
+    flex-direction:column;
+}
+.img-responsive{
+    width:100%;
+    height:auto;
+    display:block;
+}
+.container {
+    max-width: 1260px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.hero-section{
+    padding: 40px 0;
+}
+.two-cols{
+    border: 1px solid rgb(4, 65, 82);
+    border-radius: 14px;
+    padding:8px;
+    gap: 10px;
+}
+.two-cols .col{
+    border: 1px solid rgb(4, 65, 82);
+    border-radius: 14px;
+    flex:1;
+}
+.two-cols .col-text{padding: 24px 118px 24px 22px;}
+.tag {
+    border: 1px solid rgb(4, 65, 82);
+    display: inline-block;
+    vertical-align: top;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 0 0 11px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+h1 {
+    letter-spacing: -.73px;
+    font: 500 38px/44px 'Inter', sans-serif;
+    margin: 0 0 16px;
+}
+.two-cols .col:first-child p {
+    padding-right: 50px;
+    line-height: 24px;
+    margin: 0 0 20px;
+}
+.btn-default {
+    background: rgb(4, 65, 82);
+    font-weight: 500;
+    line-height: 130%;
+    padding: 0 0;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    padding: 9px 17px;
+    display: block;
+    width: fit-content;
+}
+h1 span {
+    color: rgb(4, 65, 82);
+}
+.icon {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #e4e5e1;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 6px -2px #ababab;
+}
+
+.icon img {
+    max-width: 20px;
+}
+
+.widget {
+    display: flex;
+    gap: 20px;
+    border: 1px solid rgb(4, 65, 82);
+    border-radius: 14px;
+    margin: 0 0 12px;
+    overflow: hidden;
+}
+
+.widget .text {
+    flex: 1;
+}
+
+.widget h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 13px;
+}
+
+.info {
+    display: flex;
+    gap: 20px;
+    padding: 20px 20px;
+}
+
+.widget:last-child {
+    margin: 0;
+}
+
+.two-cols .col:last-child {
+    padding: 0;
+    border: none;
+}
+canvas#chart {
+    height: 300px !important;
+}
+
+.mg-container {
+    width: 600px;
+    height: 400px;
+    position: relative;
+    background: white;
+    border: 1px solid #eee;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.grid-square {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.grid-square::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-color: #ddd;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+}
+.circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid rgb(4, 65, 82);
+    position: absolute;
+    cursor: move;
+    background: transparent;
+    z-index: 10;
+}
+.highlight-orange::before {
+    background-color: rgb(4, 65, 82) !important;
+}
+.highlight-gray::before {
+    background-color: #999 !important;
+}
+.mg-container .grid-square::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-color: #ddd;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+}
+
+.mg-container .highlight-orange::before {
+    background-color: rgb(4, 65, 82) !important;
+}
+
+.mg-container .highlight-gray::before {
+    background-color: #999 !important;
+}

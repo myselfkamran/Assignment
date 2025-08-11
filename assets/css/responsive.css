@@ -1,0 +1,23 @@
+@media(max-width:1100px){
+    .two-cols .col {
+        width: 50%;
+    }
+    .two-cols .col-text {
+        padding: 24px;
+    }
+}
+@media(max-width:768px){
+    .two-cols {
+        flex-direction: column;
+    }
+    .two-cols .col {
+        width:100%;
+    }
+    canvas#chart {
+        height: 200px !important;
+    }
+    h1 {
+        font: 500 27px / 34px 'Inter', sans-serif;
+        margin: 0 0 10px;
+    }
+}
