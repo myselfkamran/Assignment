@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment</title>
+    <link rel="stylesheet" href="assets/css/all.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/responsive.css" type="text/css">
+    <style>
+        .mg-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            background: white;
+            border: 1px solid #eee;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            grid-template-rows: repeat(15, 1fr);
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+        .grid-square {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .grid-square::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background-color: #ddd;
+            border-radius: 2px;
+            transition: background-color 0.2s ease;
+        }
+        .circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid rgb(4, 65, 82);
+            position: absolute;
+            cursor: move;
+            background: transparent;
+            z-index: 10;
+        }
+        .highlight-orange::before {
+            background-color: rgb(4, 65, 82) !important;
+        }
+        .highlight-gray::before {
+            background-color: #999 !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <main id="main">
+            <section class="hero-section">
+                <div class="container">
+                    <div class="two-cols flex">
+                        <div class="col">
+                            <div class="col-text">
+                                <span class="tag">Why Spotter.ai</span>
+                                <h1>The internet's most <span>accurate</span> visitor identifier</h1>
+                                <p><b>Industry-leading accuracy</b> that lasts for months or years, even when cookies are cleared.</p>
+                                <a href="#" class="btn-default">Learn More</a>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="widget">
+                                <div class="info">
+                                    <div class="icon"><img src="assets/images/ico1.png" alt="icon"></div>
+                                    <div class="text">
+                                        <h2>Any browser, any device.</h2>
+                                        <p>Identify returning web and mobile app visitors on all browsers, iOS, and Android, with exceptional accuracy.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget flex-column">
+                                <div class="mg-container">
+                                    <div class="grid" id="grid"></div>
+                                    <div class="circle" id="draggable"></div>
+                                </div>
+                                <div class="info">
+                                    <div class="icon"><img src="assets/images/ico2.png" alt="icon"></div>
+                                    <div class="text">
+                                        <h2>Identify all anonymous visitors.</h2>
+                                        <p>Get details on suspicious visitors even when VPN, incognito mode, or a tampered browser or device is used.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget">
+                                <div class="magnifier"></div>
+                                <div class="info">
+                                    <div class="icon"><img src="assets/images/ico3.png" alt="icon"></div>
+                                    <div class="text">
+                                        <h2>Delight your trusted users.</h2>
+                                        <p>Personalize user experience and reduce 2FA and OTP requirements by identifying logged-out users.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script>
+        // Create grid
+        const grid = document.getElementById('grid');
+        for (let i = 0; i < 300; i++) {
+            const square = document.createElement('div');
+            square.className = 'grid-square';
+            grid.appendChild(square);
+        }
+        const draggable = document.getElementById('draggable');
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 50;
+        let yOffset = 50;
+        // Touch events
+        draggable.addEventListener('touchstart', dragStart, false);
+        document.addEventListener('touchmove', drag, false);
+        document.addEventListener('touchend', dragEnd, false);
+        // Mouse events
+        draggable.addEventListener('mousedown', dragStart, false);
+        document.addEventListener('mousemove', drag, false);
+        document.addEventListener('mouseup', dragEnd, false);
+        function dragStart(e) {
+            if (e.type === 'touchstart') {
+                initialX = e.touches[0].clientX - xOffset;
+                initialY = e.touches[0].clientY - yOffset;
+            } else {
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+            }
+            if (e.target === draggable) {
+                isDragging = true;
+            }
+        }
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+                // Boundary checking
+                const container = document.querySelector('.mg-container'); // Changed to .mg-container
+                const bounds = container.getBoundingClientRect();
+                const circleBounds = draggable.getBoundingClientRect();
+                currentX = Math.max(0, Math.min(currentX, bounds.width - circleBounds.width));
+                currentY = Math.max(0, Math.min(currentY, bounds.height - circleBounds.height));
+                xOffset = currentX;
+                yOffset = currentY;
+                setTranslate(currentX, currentY, draggable);
+                checkGridIntersection(currentX, currentY);
+            }
+        }
+        function setTranslate(xPos, yPos, el) {
+            el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+        }
+        function dragEnd() {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+        }
+        function checkGridIntersection(x, y) {
+            // Reset all grid squares
+            document.querySelectorAll('.grid-square').forEach(square => {
+                square.classList.remove('highlight-orange', 'highlight-gray');
+            });
+            const circleCenter = {
+                x: x + draggable.offsetWidth / 2,
+                y: y + draggable.offsetHeight / 2
+            };
+            const circleRadius = draggable.offsetWidth / 2;
+            const circleMiddleY = y + draggable.offsetHeight / 2;
+            const gridSquares = document.querySelectorAll('.grid-square');
+            gridSquares.forEach((square) => {
+                const squareBounds = square.getBoundingClientRect();
+                const containerBounds = document.querySelector('.mg-container').getBoundingClientRect(); // Changed to .mg-container
+                const squareCenter = {
+                    x: squareBounds.left - containerBounds.left + squareBounds.width / 2,
+                    y: squareBounds.top - containerBounds.top + squareBounds.height / 2
+                };
+                const distance = Math.sqrt(
+                    Math.pow(circleCenter.x - squareCenter.x, 2) +
+                    Math.pow(circleCenter.y - squareCenter.y, 2)
+                );
+                if (distance < circleRadius) {
+                    // Determine if square is in top or bottom half of circle
+                    if (squareCenter.y < circleMiddleY) {
+                        square.classList.add('highlight-orange');
+                    } else {
+                        square.classList.add('highlight-gray');
+                    }
+                }
+            });
+        }
+        // Set initial position and check intersections
+        setTranslate(xOffset, yOffset, draggable);
+        checkGridIntersection(xOffset, yOffset);
+    </script>
+</body>
+</html>
